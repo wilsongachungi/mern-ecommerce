@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Navigation.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useLoginMutation } from "../../redux/api/usersApiSlice";
+import { useLogoutMutation } from "../../redux/api/usersApiSlice";
 import { logout } from "../../redux/features/auth/authSlice";
 
 const Navigation = () => {
@@ -20,21 +20,21 @@ const Navigation = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   const toggleDropdown = () => {
-    setShowSidebar(!showSidebar);
+    setDropdownOpen(!dropdownOpen); 
   };
 
   const toggleSidebar = () => {
-    setDropdownOpen(!dropdownOpen);
+    setShowSidebar(!showSidebar );
   };
 
-  const closeSideBar = () => {
+  const closeSidebar = () => {
     setShowSidebar(false);
   };
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [logoutApiCall] = useLoginMutation();
+  const [logoutApiCall] = useLogoutMutation();
 
   const logoutHandler = async () => {
     try {
@@ -126,17 +126,65 @@ const Navigation = () => {
                 <li>
                   <Link
                     to="/admin/dashboard"
-                    classsname="block px-4 py-2 hover:bg-gray-100"
+                    className="block px-4 py-2 hover:bg-gray-100"
                   >
                     Dashboard
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    to="/admin/productlist"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Products
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/admin/categorylist"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Category
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/admin/orderlist"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Orders
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/admin/userlist"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Users
+                  </Link>
+                </li>
               </>
             )}
+            <li>
+                  <Link
+                    to="/admin/profile"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/admin/logout"
+                    onClick={logoutHandler}
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Logout
+                  </Link>
+                </li>
           </ul>
         )}
-      </div>
-
+        
       {!userInfo && (
         <ul>
           <li>
@@ -160,6 +208,7 @@ const Navigation = () => {
           </li>
         </ul>
       )}
+      </div>
     </div>
   );
 };

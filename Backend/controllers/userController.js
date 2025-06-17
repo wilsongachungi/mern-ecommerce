@@ -2,6 +2,7 @@ import User from "../models/userModel.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import bcrypt from "bcryptjs";
 import createToken from "../utils/createToken.js";
+import create from "../utils/createToken.js";
 
 const createUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
@@ -26,6 +27,7 @@ const createUser = asyncHandler(async (req, res) => {
       username: newUser.username,
       email: newUser.email,
       isAdmin: newUser.isAdmin,
+      token,
     });
   } catch (error) {
     res.status(400);
@@ -36,26 +38,31 @@ const createUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
+  // 1) Find the user
   const existingUser = await User.findOne({ email });
-
-  if (existingUser) {
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      existingUser.password
-    );
-
-    if (isPasswordValid) {
-      createToken(res, existingUser._id);
-
-      res.status(201).json({
-        _id: existingUser._id,
-        username: existingUser.username,
-        email: existingUser.email,
-        isAdmin: existingUser.isAdmin,
-      });
-      return;
-    }
+  if (!existingUser) {
+    res.status(401);
+    throw new Error("Invalid email or password");
   }
+
+  // 2) Verify password (only two args: plain, hashed)
+  const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+  if (!isPasswordValid) {
+    res.status(401);
+    throw new Error("Invalid email or password");
+  }
+
+  // 3) Generate the token & set cookie, capturing the return value
+  const token = create(res, existingUser._id);
+
+  // 4) Send back user info + token
+  res.status(200).json({
+    _id: existingUser._id,
+    username: existingUser.username,
+    email: existingUser.email,
+    isAdmin: existingUser.isAdmin,
+    token, // ← now defined
+  });
 });
 
 const logoutCurrentUser = asyncHandler(async (req, res) => {
@@ -141,27 +148,27 @@ const getUserById = asyncHandler(async (req, res) => {
   }
 });
 
-const updateUserById = asyncHandler(async(req, res) => {
-  const user = await User.findById(req.params.id)
+const updateUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
 
-  if(user) {
-    user.username = req.body.username || user.username
-    user.email = req.body.email || user.email
-    user.isAdmin = Boolean(req.body.isAdmin)
+  if (user) {
+    user.username = req.body.username || user.username;
+    user.email = req.body.email || user.email;
+    user.isAdmin = Boolean(req.body.isAdmin);
 
-    const updatedUser = await user.save()
+    const updatedUser = await user.save();
 
     res.json({
       _id: updatedUser._id,
       username: updatedUser.username,
       email: updateUserById.email,
-      isAdmin: updatedUser.isAdmin
-    }) 
-  }else {
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
     res.status(404);
     throw new Error("User not found");
   }
-})
+});
 
 export {
   createUser,
@@ -172,5 +179,5 @@ export {
   updateCurrentUserProfile,
   deleteUserById,
   getUserById,
-  updateUserById
+  updateUserById,
 };
