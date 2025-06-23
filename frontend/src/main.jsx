@@ -4,7 +4,9 @@ import { StrictMode } from 'react';
 import App from './App.jsx';
 import './index.css';
 import Login from "./pages/Auth/Login.jsx";
-import Register from "./pages/Auth/register.jsx"
+import Register from "./pages/Auth/register.jsx";
+import PrivateRoute from './components/PrivateRoute.jsx';
+import Profile from './pages/Users/Profile.jsx';
 
 import {
   createBrowserRouter,
@@ -19,9 +21,17 @@ import store from './redux/store.js';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path='/' element={<App />} />
-      <Route path='/login' element={<Login />} />
-      <Route path='/Register' element={<Register />} />
+      {/* Public Layout with navigation (optional) */}
+      <Route path="/" element={<App />}>
+        {/* Protected Routes */}
+        <Route element={<PrivateRoute />}>
+          <Route path="profile" element={<Profile />} />
+        </Route>
+
+        {/* Public Routes */}
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+      </Route>
     </>
   )
 );
