@@ -45,7 +45,7 @@ const Profile = () => {
         <div className="container mx-auto p-4 mt-[10rem]">
         <div className="flex justify-center items-center md:space-x-4">
           <div className="md:w-1/3">
-            <h2 className="text-2xl font-semibold mb-4 text-white">Update Profile</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-black-200">Update Profile</h2>
             <form onSubmit={submitHandler} className="bg-gray-800 p-6 rounded-lg shadow-md">
               <div className="mb-4">
                 <label className="block text-white mb-2">Name</label>
