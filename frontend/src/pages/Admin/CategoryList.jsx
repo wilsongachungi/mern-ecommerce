@@ -8,6 +8,7 @@ import {
 } from "../../redux/api/categoryApiSlice";
 import CategoryForm from "../../components/CategoryForm";
 import Modal from "../../components/Modal";
+import AdminMenu from "./AdminMenu";
 
 const CategoryList = () => {
   const { data: categories } = useFetchCategoryQuery();
@@ -22,48 +23,29 @@ const CategoryList = () => {
 
   const handleCreateCategory = async (e) => {
     e.preventDefault();
-
-    if (!name) {
-      toast.error("Category name is required");
-      return;
-    }
+    if (!name) return toast.error("Category name is required");
     try {
       const result = await createCategory({ name }).unwrap();
-      if (result.error) {
-        toast.error(result.error);
-      } else {
-        setName("");
-        toast.success(`${result.name} is created.`);
-      }
+      toast.success(`${result.name} is created.`);
+      setName("");
     } catch (error) {
       console.error(error);
-      toast.error("Creating category failed ");
+      toast.error("Creating category failed");
     }
   };
 
   const handleUpdateCategory = async (e) => {
     e.preventDefault();
-
-    if (!updatingName) {
-      toast.error("Category name is required");
-      return;
-    }
+    if (!updatingName) return toast.error("Category name is required");
     try {
       const result = await updateCategory({
         categoryId: selectedCategory._id,
-        updatedCategory: {
-          name: updatingName,
-        },
+        updatedCategory: { name: updatingName },
       }).unwrap();
-
-      if (result.error) {
-        toast.error(result.error);
-      } else {
-        toast.success(`${result.name} is updated`);
-        setSelectedCategory(null);
-        setUpdatingName("");
-        setModalVisible(false);
-      }
+      toast.success(`${result.name} is updated`);
+      setSelectedCategory(null);
+      setUpdatingName("");
+      setModalVisible(false);
     } catch (error) {
       console.error(error);
     }
@@ -71,62 +53,59 @@ const CategoryList = () => {
 
   const handleDeleteCategory = async () => {
     try {
-      const result = await deleteCategory(selectedCategory._id).unwrap()
-      if(result.error) {
-        toast.error(result.error)
-      }else {
-        toast.success(`${result.name} is deleted`)
-        setSelectedCategory(null)
-        setModalVisible(false)
-
-      }
-
+      const result = await deleteCategory(selectedCategory._id).unwrap();
+      toast.success(`${result.name} is deleted`);
+      setSelectedCategory(null);
+      setModalVisible(false);
     } catch (error) {
-      console.error
-      toast.error('Category deletion failed. Try again')
+      console.error(error);
+      toast.error("Category deletion failed. Try again");
     }
-  }
+  };
 
   return (
-    <div className="ml-[10rem] flex flex-col md:flex-raw">
-      {/*<AdminMenu*/}
-      <div className="h-12 text-white">Manage Categories</div>
-      <CategoryForm
-        value={name}
-        setValue={setName}
-        handleSubmit={handleCreateCategory}
-      />
-      <br />
-      <hr />
-      <div className="flex flex-wrap">
-        {categories?.map((category) => (
-          <div key={category._id}>
-            <button
-              className="bg-white border border-pink-500 text-pink-500 py-2 px-4 rounded-lg m-3 hover:bg-pink-500 hover:text-white focus:outline-none focus:ring-2
-               focus:ring-pink-500 focus:ring-opacity-50"
-              onClick={() => {
-                {
+    <div className="flex">
+      <AdminMenu />
+      <div className="flex flex-col items-center justify-center w-full px-4 py-10">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Manage Categories</h2>
+
+        <div className="w-full max-w-md bg-white p-4 rounded shadow mb-8">
+          <CategoryForm
+            value={name}
+            setValue={setName}
+            handleSubmit={handleCreateCategory}
+          />
+        </div>
+
+        <div className="w-full max-w-4xl">
+          <h3 className="text-lg font-medium text-gray-700 mb-4 text-center">Available Categories</h3>
+          <div className="flex flex-wrap justify-center gap-4">
+            {categories?.map((category) => (
+              <button
+                key={category._id}
+                className="bg-white border border-pink-500 text-pink-500 py-2 px-4 rounded hover:bg-pink-500 hover:text-white transition"
+                onClick={() => {
                   setModalVisible(true);
                   setSelectedCategory(category);
                   setUpdatingName(category.name);
-                }
-              }}
-            >
-              {category.name}
-            </button>
+                }}
+              >
+                {category.name}
+              </button>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
 
-      <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>
-        <CategoryForm
-          value={updatingName}
-          setValue={(value) => setUpdatingName(value)}
-          handleSubmit={handleUpdateCategory}
-          buttonText="Update"
-          handleDelete={handleDeleteCategory}
-        />
-      </Modal>
+        <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>
+          <CategoryForm
+            value={updatingName}
+            setValue={(value) => setUpdatingName(value)}
+            handleSubmit={handleUpdateCategory}
+            buttonText="Update"
+            handleDelete={handleDeleteCategory}
+          />
+        </Modal>
+      </div>
     </div>
   );
 };
