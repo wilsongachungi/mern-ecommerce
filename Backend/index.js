@@ -6,6 +6,7 @@ import userRoutes from './routes/userRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import productRoutes from './routes/productRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import OrderRoutes from './routes/orderRoutes.js';
 
 //utiles
 import connectDB from './config/db.js'
@@ -25,6 +26,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/category", categoryRoutes)
 app.use('/api/productS', productRoutes)
 app.use("/api/upload", uploadRoutes)
+app.use("/api/orders", OrderRoutes)
 
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname + '/uploads')));

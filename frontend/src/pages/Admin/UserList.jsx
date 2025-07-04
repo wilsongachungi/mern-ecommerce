@@ -8,6 +8,7 @@ import {
   useDeleteUserMutation,
   useUpdateUserMutation,
 } from "../../redux/api/usersApiSlice";
+import AdminMenu from "./AdminMenu";
 
 const UserList = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery();
@@ -64,6 +65,7 @@ const updateHandler = async(id) => {
         </Message>
       ) : (
         <div className="flex flex-col md:flex-row">
+          <AdminMenu/>
           <table className="w-full md:w-4/5 mx-auto">
             <thead>
               <tr>
