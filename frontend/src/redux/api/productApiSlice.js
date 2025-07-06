@@ -37,7 +37,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: productData,
             }),
-            invalidatestags: ["Product"],
+            invalidatesTags: ["Product"],
         }),
 
         updateProduct: builder.mutation({
