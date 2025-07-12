@@ -27,6 +27,7 @@ import Favorites from "./pages/Products/Favorites.jsx";
 import ProductDetails from "./pages/Products/ProductsDetails.jsx";
 import Cart from "./pages/Cart.jsx";
 import Shop from "./pages/Shop.jsx";
+import PlaceOrder from "./pages/Orders/PlaceOrder.jsx";
 
 // Create the router
 const router = createBrowserRouter(
@@ -44,6 +45,7 @@ const router = createBrowserRouter(
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/shipping' element={<Shipping />} />
+          <Route path='/placeorder' element={<PlaceOrder />} />
         </Route>
 
         {/* Admin Routes */}

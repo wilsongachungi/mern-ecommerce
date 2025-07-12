@@ -135,7 +135,7 @@ const ProductDetails = () => {
                   text={`${product.numReviews} reviews`}
                 />
 
-                {product.CountInStock > 0 && (
+                {product.countInStock > 0 && (
                   <div>
                     <select
                       value={qty}
@@ -155,7 +155,7 @@ const ProductDetails = () => {
               <div className="btn-container">
                 <button
                     onClick={addToCartHandler}
-                  disable={product.countInstock === 0}
+                  disabled={product.countInstock === 0}
                   className="bg-pink-600 text-white py-2 px-4 rounded-lg mt-4 md:mt-0"
                 >
                   Add To Cart

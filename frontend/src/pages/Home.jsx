@@ -1,9 +1,9 @@
-import {Link, useParams} from "react-router-dom"
-import { useGetProductsQuery } from "../redux/api/productApiSlice"
-import Loader from '../components/loader'
-import Message from "../components/Message"
-import Header  from "../components/Header"
-import Product from "./Products/Product"
+import { Link, useParams } from "react-router-dom";
+import { useGetProductsQuery } from "../redux/api/productApiSlice";
+import Loader from '../components/loader';
+import Message from "../components/Message";
+import Header from "../components/Header";
+import Product from "./Products/Product";
 
 const Home = () => {
   const { keyword } = useParams();
@@ -11,33 +11,39 @@ const Home = () => {
 
   return (
     <>
-      {!keyword ? <Header /> : null}
-      {isLoading ? (<Loader/>) : isError ? (<Message variant="danger">
-        {isError?.data.message || isError}
-      </Message>) : (
+      {!keyword && <Header />}
+      
+      {isLoading ? (
+        <Loader />
+      ) : isError ? (
+        <Message variant="danger">
+          {isError?.data?.message || "Something went wrong"}
+        </Message>
+      ) : (
         <>
-            <div className="flex justify-between items-center">
-                <h3 className="ml-[20rem] mt-[10rem] text-[3rem] text-white">
-                    Special Products
-                </h3>
+          {/* Title & Shop Link */}
+          <div className="flex flex-col md:flex-row justify-between items-center mt-10 md:mt-20 px-4">
+            <h3 className="text-3xl font-bold text-white mb-4 md:mb-0">
+              Special Products
+            </h3>
+            <Link
+              to="/shop"
+              className="bg-pink-600 hover:bg-pink-700 text-white font-semibold py-2 px-6 rounded-full transition"
+            >
+              Shop
+            </Link>
+          </div>
 
-                <Link to="/shop" className="bg-pink-600 font-bold rounded-full py-2 px-10 mr-[18rem] mt-[10rem]">Shop</Link>
-                </div>
-                <div>
-
-                <div className="flex justify-center flex-wrap mt-[2rem]">
-                    {data.products.map((product) => (
-                        <div key={product._id}>
-                            <Product product={product} />
-                        </div>
-                    ))}
-                </div>
-            </div>
+          {/* Products */}
+          <div className="flex justify-center flex-wrap gap-4 mt-6">
+            {data.products.map((product) => (
+              <Product key={product._id} product={product} />
+            ))}
+          </div>
         </>
       )}
     </>
   );
 };
-
 
 export default Home;

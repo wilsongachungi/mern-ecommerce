@@ -25,15 +25,13 @@ const ProductCarousel = () => {
     autoplay: true,
     autoplaySpeed: 3000,
   };
+
   return (
-    <div className="mb-4 xl:block lg:block md:block">
+    <div className="mb-6">
       {isLoading ? null : error ? (
         <Message>{error?.data?.message || error.message}</Message>
       ) : (
-        <Slider
-          {...setting}
-          className="xl:w-[50rem] lg:w-[50rem] md:-[56rem] small:w-[40rem] sm:block"
-        >
+        <Slider {...setting} className="w-full max-w-[56rem] mx-auto">
           {products.map(
             ({
               image,
@@ -48,52 +46,54 @@ const ProductCarousel = () => {
               quantity,
               countInStock,
             }) => (
-              <div key={_id}>
+              <div key={_id} className="p-4">
+                {/* Image */}
                 <img
                   src={image}
                   alt={name}
-                  className="w-full rounded-lg object-cover h-[30rem]"
+                  className="w-full h-[20rem] md:h-[30rem] object-cover rounded-lg"
                 />
-                <div className="flex justify-between w-[20rem]">
-                  <div className="one">
-                    <h2 className="text-white">{name}</h2>
-                    <p className="text-white">Ksh {price}</p> <br /> <br />
-                    <p className="w-[25rem] text-white">
+
+                {/* Info Container */}
+                <div className="mt-4 flex flex-col md:flex-row justify-between text-white gap-6">
+                  {/* Left Section */}
+                  <div className="flex-1">
+                    <h2 className="text-xl font-semibold">{name}</h2>
+                    <p className="text-pink-400 font-bold">Ksh {price}</p>
+                    <p className="mt-2 text-sm text-gray-200">
                       {description?.substring(0, 170)}
                     </p>
-                    \
                   </div>
-                  <div className="flex justify-between w-[8rem]">
-                    <div className="one">
-                      <h1 className="flex items-center mb-6 w-[15rem] text-white">
-                        <FaStore className="mr-2 text-white" /> Brand: {brand}{" "}
-                        <br />
-                        </h1>
-                         <h1 className="flex items-center mb-6 w-[15rem] text-white">
-                        <FaClock className="mr-2 text-white" /> Created:{" "}
-                        {moment(createdAt).fromNow()}
-                        </h1>
-                         <h1 className="flex items-center mb-6 w-[15rem] text-white">
-                        <FaStar className="mr-2 text-white" /> Review:{" "}
-                        {numReviews} <br />
-                      </h1>
+
+                  {/* Middle Info Block */}
+                  <div className="flex-1 space-y-3">
+                    <div className="flex items-center text-sm">
+                      <FaStore className="mr-2" /> Brand: {brand}
                     </div>
+                    <div className="flex items-center text-sm">
+                      <FaClock className="mr-2" />
+                      Created: {moment(createdAt).fromNow()}
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <FaStar className="mr-2" />
+                      Reviews: {numReviews}
+                    </div>
+                  </div>
 
-                   <div className="two">
-                     <h1 className="flex items-center mb-6 w-[8rem] text-white">
-                        <FaStar className="mr-2 text-white" /> Ratings:
-                        {Math.round(rating)}
-                     </h1>
-                     <h1 className="flex items-center mb-6 w-[8rem] text-white">
-                        <FaShoppingCart className="mr-2 text-white" /> Quantity:
-                        {quantity}
-                     </h1>
-                     <h1 className="flex items-center mb-6 w-[8rem] text-white">
-                        <FaBox className="mr-2 text-white" /> In Stock: 
-                         {countInStock}
-                     </h1>
-                   </div>
-
+                  {/* Right Info Block */}
+                  <div className="flex-1 space-y-3">
+                    <div className="flex items-center text-sm">
+                      <FaStar className="mr-2" />
+                      Rating: {Math.round(rating)}
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <FaShoppingCart className="mr-2" />
+                      Quantity: {quantity}
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <FaBox className="mr-2" />
+                      In Stock: {countInStock}
+                    </div>
                   </div>
                 </div>
               </div>
