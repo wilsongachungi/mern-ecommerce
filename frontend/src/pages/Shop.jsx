@@ -9,6 +9,7 @@ import {
 import Loader from "../components/loader";
 import { useFetchCategoryQuery } from "../redux/api/categoryApiSlice";
 import ProductCard from "./Products/ProductCard";
+import TopBanner from "../components/topBanner";
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -206,6 +207,26 @@ const Shop = () => {
 
           {/* Products List */}
           <div className="p-3 w-full">
+            {/* Top Banner */}
+            <TopBanner
+              message="🔥 Summer Sale! Get 20% off sitewide."
+              phone="0791193343"
+              email="support@myecommerce.com"
+              bgColor="bg-pink-500"
+              textColor="text-gray-900"
+            />
+
+            <div className="px-6 py-4 bg-white text-gray-800 text-center">
+              <p className="text-lg font-semibold">
+                Don’t miss out on our biggest summer deals! For a limited time
+                only, enjoy unbeatable discounts on all your favorite products.
+              </p>
+              <p className="text-center text-lg font-semibold">
+                ✨ Shop smart, save big — grab your favorites today at
+                unbeatable prices! ✨
+              </p>
+            </div>
+
             <h2 className="h4 text-center mb-4 text-white">
               {products?.length} Products
             </h2>

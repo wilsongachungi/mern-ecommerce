@@ -32,6 +32,7 @@ function calcPrices(orderItems, city) {
 
 const createOrder = async (req, res) => {
     try {
+        
         const {orderItems, shippingAddress, paymentMethod} = req.body;
 
         if(orderItems && orderItems.length === 0) {

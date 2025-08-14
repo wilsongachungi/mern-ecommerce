@@ -66,7 +66,7 @@ export const {
     useGetTotalOrderQuery,
     useGetTotalSalesQuery ,
     useGetTotalSalesByDateQuery,
-
+useGetPaypalClientIdQuery,
     useCreateOrderMutation,
     useGetOrderDetailsQuery,
     usePayOrderMutation,

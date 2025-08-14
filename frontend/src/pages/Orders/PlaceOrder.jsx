@@ -35,6 +35,7 @@ const PlaceOrder = () => {
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
       }).unwrap();
+      
       dispatch(clearCartItems());
       navigate(`/orders/${res._id}`);
     } catch (error) {
@@ -79,7 +80,7 @@ const PlaceOrder = () => {
                     <td className="p-2 text-white">{item.qty}</td>
                     <td className="p-2 text-white">{item.price.toFixed(2)}</td>
                     <td className="p-2 text-white">
-                      Ksh {(item.qty * Number(item.price)).toFixed(2)}
+                      Ksh {(item.qty * Number(item.price)).toFixed(2)}                      
                     </td>
                   </tr>
                 ))}
