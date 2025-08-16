@@ -10,6 +10,7 @@ import Loader from "../components/loader";
 import { useFetchCategoryQuery } from "../redux/api/categoryApiSlice";
 import ProductCard from "./Products/ProductCard";
 import TopBanner from "../components/topBanner";
+import shopnasiLogo from "../assets/shopnasilogo.png"
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -204,28 +205,42 @@ const Shop = () => {
               </button>
             </div>
           )}
-
+          
           {/* Products List */}
           <div className="p-3 w-full">
             {/* Top Banner */}
-            <TopBanner
-              message="🔥 Summer Sale! Get 20% off sitewide."
-              phone="0791193343"
-              email="support@myecommerce.com"
-              bgColor="bg-pink-500"
-              textColor="text-gray-900"
-            />
+          <TopBanner
+            messages={[
+              "🔥 Summer Sale! Get 20% off sitewide.",
+              "🚀 New arrivals every week — shop now before they're gone!",
+              "💥 Big brands, small prices — grab your deals today!",
+              "✨ Upgrade your life without breaking the bank!",
+              "📦 Fast delivery, straight to your doorstep!",
+              "🛍️ Your cart called — it wants these deals now!",
+              "🎁 Special offers just for you — don’t miss out!",
+              "💎 Quality products at prices you’ll love!",
+              "⚡ Limited-time deals — shop smarter, save bigger!",
+            ]}
+            logo={shopnasiLogo}
+            phone="0791193343"
+            email="jumuika.co.ke"
+            bgColor="bg-pink-700"
+            textColor="text-white"
+            interval={6000}
+          />
 
-            <div className="px-6 py-4 bg-white text-gray-800 text-center">
-              <p className="text-lg font-semibold">
-                Don’t miss out on our biggest summer deals! For a limited time
-                only, enjoy unbeatable discounts on all your favorite products.
-              </p>
-              <p className="text-center text-lg font-semibold">
-                ✨ Shop smart, save big — grab your favorites today at
-                unbeatable prices! ✨
-              </p>
-            </div>
+          {/* Company care paragraph */}
+          <div className="bg-gray-100 text-gray-800 py-6 px-8 text-center">
+            <p className="max-w-2xl mx-auto text-lg font-medium leading-relaxed">
+              At{" "}
+              <span className="font-bold text-pink-600">
+                Shop<span class="text-pink-900">Nasi</span>
+              </span>
+              , we go beyond selling products. Our mission is to give you a
+              stress-free shopping experience with quality items, fast delivery,
+              and warm customer service — because we truly care about you.
+            </p>
+          </div>
 
             <h2 className="h4 text-center mb-4 text-white">
               {products?.length} Products

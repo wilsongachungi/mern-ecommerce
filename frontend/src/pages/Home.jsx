@@ -4,6 +4,9 @@ import Loader from '../components/loader';
 import Message from "../components/Message";
 import Header from "../components/Header";
 import Product from "./Products/Product";
+import TopBanner from "../components/topBanner";
+
+
 
 const Home = () => {
   const { keyword } = useParams();
@@ -11,7 +14,41 @@ const Home = () => {
 
   return (
     <>
+
+        <TopBanner
+        
+      messages={[
+        "🔥 Summer Sale! Get 20% off sitewide.",
+        "🚀 New arrivals every week — shop now before they're gone!",
+        "💥 Big brands, small prices — grab your deals today!",
+        "✨ Upgrade your life without breaking the bank!",
+        "📦 Fast delivery, straight to your doorstep!",
+        "🛍️ Your cart called — it wants these deals now!",
+        "🎁 Special offers just for you — don’t miss out!",
+        "💎 Quality products at prices you’ll love!",
+        "⚡ Limited-time deals — shop smarter, save bigger!",
+      ]}i
+      phone="0791193343"
+      email="jumuika.co.ke"
+      bgColor="bg-pink-700"
+      textColor="text-white"
+      interval={6000}
+    />
+
+    {/* Company Care Paragraph */}
+    <div className="bg-gray-100 text-gray-800 py-6 px-8 text-center">
+      <p className="max-w-2xl mx-auto text-lg font-medium leading-relaxed">
+        At{" "}
+        <span className="font-bold text-pink-600">
+          Shop<span className="text-pink-900">Nasi</span>
+        </span>
+        , we go beyond selling products. Our mission is to give you a
+        stress-free shopping experience with quality items, fast delivery,
+        and warm customer service — because we truly care about you.
+      </p>
+    </div>
       {!keyword && <Header />}
+      
       
       {isLoading ? (
         <Loader />
